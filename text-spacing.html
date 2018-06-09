@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/page.css">
+        <script src="js/text-spacing.js"></script>
+        <script src="js/lex-generator.js"></script>
+        <script src="js/preference-store.js"></script>
+        <script src="js/css-enactor.js"></script>
+    </head>
+    <body>
+        <h1>Text Spacing</h1>
+        <div id="text-spacing">
+
+        </div>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <script>
+            lexGenerator.preferenceStoreInit(preferenceSchema.textSpacing);
+            lexGenerator.controls(preferenceSchema.textSpacing, "#text-spacing");
+            cssEnactor.enact(preferenceStore);
+        </script>
+    </body>
+</html>
