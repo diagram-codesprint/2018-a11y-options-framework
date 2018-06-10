@@ -2,7 +2,7 @@
 ( function() {
 
 
-  var persistence = {};
+  let persistence = {};
 
   persistence.controlIds = {
     filename: "persistence-filename",
@@ -24,14 +24,14 @@
 `;
 
   persistence.appendControlMarkup = function( controlAreaSelector ) {
-    var controlArea = document.querySelector( controlAreaSelector );
+    let controlArea = document.querySelector( controlAreaSelector );
     controlArea.innerHTML = persistence.controlMarkup;
     persistence.bindControls();
   };
 
   persistence.bindControls = function() {
-    var saveButton = document.querySelector( "#" + persistence.controlIds.save );
-    var loadButton = document.querySelector( "#" + persistence.controlIds.load );
+    let saveButton = document.querySelector( "#" + persistence.controlIds.save );
+    let loadButton = document.querySelector( "#" + persistence.controlIds.load );
 
     saveButton.onclick = persistence.save;
     loadButton.onclick = persistence.load;
@@ -39,18 +39,18 @@
 
   persistence.save = function() {
     console.log( "persistence.save" );
-    var req = new XMLHttpRequest();
+    let req = new XMLHttpRequest();
     req.open( "POST", "/preferences" );
     req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
 
-    var filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
+    let filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
-    var saveDetails = {
+    let saveDetails = {
       filename: filename,
       preferences: preferenceStore
     };
 
-    var saveDetailsAsJSON = JSON.stringify( saveDetails );
+    let saveDetailsAsJSON = JSON.stringify( saveDetails );
 
     console.log( "saveDetails as JSON", saveDetailsAsJSON );
 
@@ -67,7 +67,7 @@
 
   persistence.load = function() {
     console.log( "persistence.load" );
-    var req = new XMLHttpRequest();
+    let req = new XMLHttpRequest();
 
     req.addEventListener( "load", function( evt ) {
       console.log( "load call completed", evt );
@@ -80,9 +80,9 @@
       console.log( "load call error", evt );
     } );
 
-    var filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
+    let filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
-    var loadDetails = {
+    let loadDetails = {
       filename: filename
     };
     req.open( "GET", "/preferences/" + filename );
