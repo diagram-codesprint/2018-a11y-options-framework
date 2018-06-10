@@ -64,10 +64,12 @@ persistence.save = function () {
 persistence.load = function () {
     console.log("persistence.load");
     var req = new XMLHttpRequest();
-    req.open("GET", "/preferences");
 
     req.addEventListener("load", function (evt) {
         console.log("load call completed", evt);
+
+        preferenceStore = JSON.parse( evt.currentTarget.response).preferences;
+        cssEnactor.enact( preferenceStore, 'preview');
     });
 
     req.addEventListener("error", function (evt) {
@@ -79,6 +81,7 @@ persistence.load = function () {
     var loadDetails = {
         filename: filename
     };
+    req.open("GET", "/preferences/" + filename);
 
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 

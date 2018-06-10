@@ -20,13 +20,14 @@ app.post( '/preferences', function( request, response){
 
     console.log( 'in post preferences');
     let preferencesJSON = request.body;
-
+    fs.writeFileSync('data/' + preferencesJSON.filename, JSON.stringify(preferencesJSON));
     console.log( preferencesJSON);
+    response.end("{saved: true}");
+
 });
+app.get( '/preferences/:filename', function( request, response){
 
-app.get( '/preferences', function( request, response){
-
-    console.log( 'in get preferences');
+    response.end(fs.readFileSync('data/' + request.params.filename));
 
 });
 
@@ -48,4 +49,4 @@ app.listen(port, function(err) {
     }
 
     console.log('server is listening on ' + port);
-})
+});
