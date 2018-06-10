@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/page.css">
-        <script src="js/text-spacing.js"></script>
+        <script src="js/preference-schemas.js"></script>
         <script src="js/lex-generator.js"></script>
         <script src="js/persistence.js"></script>
         <script src="js/preference-store.js"></script>
@@ -9,6 +9,10 @@
     </head>
     <body>
         <div id="text-spacing">
+
+        </div>
+
+        <div id="font">
 
         </div>
 
@@ -27,7 +31,9 @@
         <script>
             persistence.appendControlMarkup("#persistence-controls");
             lexGenerator.preferenceStoreInit(preferenceSchema.textSpacing);
+            lexGenerator.preferenceStoreInit(preferenceSchema.font);
             lexGenerator.controls(preferenceSchema.textSpacing, "#text-spacing");
+            lexGenerator.controls(preferenceSchema.font, "#font");
             cssEnactor.enact(preferenceStore, "page");
         </script>
     </body>

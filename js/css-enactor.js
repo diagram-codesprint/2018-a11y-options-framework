@@ -10,6 +10,10 @@ cssEnactor.transforms.toRem = function (value) {
     return value + "rem";
 };
 
+cssEnactor.transforms.toPixel = function (value) {
+    return value + "px";
+};
+
 cssEnactor.enactmentMap = {};
 
 cssEnactor.enactmentMap.textSpacing = {
@@ -57,6 +61,20 @@ cssEnactor.enactmentMap.textSpacing = {
                 }
             }
         }
+};
+
+cssEnactor.enactmentMap.font = {
+    fontSize: {
+        selectorSets: {
+            "page": ["body"],
+            "preview": ["#preview-area"]
+        },
+        properties: {
+            "font-size": {
+                transform: cssEnactor.transforms.toPixel
+            }
+        }
+    }
 };
 
 cssEnactor.enact = function (preferenceStore, selectorSet) {

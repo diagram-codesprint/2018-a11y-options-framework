@@ -51,3 +51,20 @@ preferenceSchema.textSpacing.preferences.wordSpacing = {
         step: 0.1
     }
 };
+
+preferenceSchema.font = {
+    name: "Font",
+    class: "font",
+    preferences: {}
+};
+
+preferenceSchema.font.preferences.fontSize = {
+    name: "Font Size",
+    defaultValue: "initial",
+    type: "numeric",
+    control: {
+        min: 12,
+        max: 36,
+        step: 1
+    }
+};
