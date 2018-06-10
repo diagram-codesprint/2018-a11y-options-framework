@@ -53,21 +53,34 @@ persistence.save = function () {
     req.addEventListener("load", function (evt) {
         console.log("save call completed", evt);
     });
+
     req.addEventListener("error", function (evt) {
         console.log("load call error", evt);
     });
+
     req.send(saveDetailsAsJSON);
 };
 
 persistence.load = function () {
     console.log("persistence.load");
     var req = new XMLHttpRequest();
+    req.open("GET", "/preferences");
+
     req.addEventListener("load", function (evt) {
         console.log("load call completed", evt);
     });
+
     req.addEventListener("error", function (evt) {
         console.log("load call error", evt);
     });
-    req.open("GET", "/preferences");
-    req.send();
+
+    var filename = document.querySelector("#" + persistence.controlIds.filename).value;
+
+    var loadDetails = {
+        filename: filename
+    };
+
+    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    req.send(JSON.stringify(loadDetails));
 };
