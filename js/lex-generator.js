@@ -11,24 +11,32 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
 
         var controlsArea = document.querySelector(controlAreasQuerySelector);
 
-        var controlElement = document.createElement("div");
-
-        var labelElement = document.createElement("label");
-        labelElement.innerHTML = preference.name;
-
-        var inputElement = document.createElement("input");
-
-        inputElement.classList.add(preferenceSchema.class);
-
-        inputElement.name = preferenceKey;
-
-        labelElement.appendChild(inputElement);
-        controlElement.appendChild(labelElement);
-
+        var controlElement = lexGenerator.getControl(preference.name, preferenceSchema.class, preferenceKey);
         controlsArea.appendChild(controlElement);
     });
 
     lexGenerator.events(preferenceSchema);
+};
+
+lexGenerator.getControl = function (preferenceName, schemaKey, preferenceKey) {
+    var controlElement = document.createElement("div");
+
+    var labelElement = document.createElement("label");
+
+    labelElement.innerHTML = preferenceName;
+
+    var inputElement = document.createElement("input");
+
+    inputElement.classList.add(schemaKey);
+
+    inputElement.classList.add(schemaKey + "-" + preferenceKey);
+
+    inputElement.name = preferenceKey;
+
+    labelElement.appendChild(inputElement);
+    controlElement.appendChild(labelElement);
+
+    return controlElement;
 };
 
 lexGenerator.events = function (preferenceSchema) {
@@ -41,7 +49,9 @@ lexGenerator.events = function (preferenceSchema) {
             // User feedback
             console.log("Preference change", name, value);
             preferenceStore[preferenceSchema.class][target.name].value = target.value;
-            // TODO: this is bad
+            // TODO: this does the entire CSS enactment again
+            // it would be more efficient to target based on
+            // the change
             cssEnactor.enact(preferenceStore, "preview");
             console.log(preferenceStore);
         };
