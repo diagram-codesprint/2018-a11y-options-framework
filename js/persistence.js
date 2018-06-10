@@ -1,13 +1,17 @@
-var persistence = {};
 
-persistence.controlIds = {
+( function() {
+
+
+  var persistence = {};
+
+  persistence.controlIds = {
     filename: "persistence-filename",
     save: "persistence-save",
     load: "persistence-load"
-};
+  };
 
-persistence.controlMarkup =
-`
+  persistence.controlMarkup =
+    `
 <fieldset>
     <legend>
         Persistence
@@ -19,71 +23,73 @@ persistence.controlMarkup =
 </fieldset>
 `;
 
-persistence.appendControlMarkup = function (controlAreaSelector) {
-    var controlArea = document.querySelector(controlAreaSelector);
+  persistence.appendControlMarkup = function( controlAreaSelector ) {
+    var controlArea = document.querySelector( controlAreaSelector );
     controlArea.innerHTML = persistence.controlMarkup;
     persistence.bindControls();
-};
+  };
 
-persistence.bindControls = function () {
-    var saveButton = document.querySelector("#" + persistence.controlIds.save);
-    var loadButton = document.querySelector("#" + persistence.controlIds.load);
+  persistence.bindControls = function() {
+    var saveButton = document.querySelector( "#" + persistence.controlIds.save );
+    var loadButton = document.querySelector( "#" + persistence.controlIds.load );
 
     saveButton.onclick = persistence.save;
     loadButton.onclick = persistence.load;
-};
+  };
 
-persistence.save = function () {
-    console.log("persistence.save");
+  persistence.save = function() {
+    console.log( "persistence.save" );
     var req = new XMLHttpRequest();
-    req.open("POST", "/preferences");
-    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    req.open( "POST", "/preferences" );
+    req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
 
-    var filename = document.querySelector("#" + persistence.controlIds.filename).value;
+    var filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
     var saveDetails = {
-        filename: filename,
-        preferences: preferenceStore
+      filename: filename,
+      preferences: preferenceStore
     };
 
-    var saveDetailsAsJSON = JSON.stringify(saveDetails);
+    var saveDetailsAsJSON = JSON.stringify( saveDetails );
 
-    console.log("saveDetails as JSON", saveDetailsAsJSON);
+    console.log( "saveDetails as JSON", saveDetailsAsJSON );
 
-    req.addEventListener("load", function (evt) {
-        console.log("save call completed", evt);
-    });
+    req.addEventListener( "load", function( evt ) {
+      console.log( "save call completed", evt );
+    } );
 
-    req.addEventListener("error", function (evt) {
-        console.log("load call error", evt);
-    });
+    req.addEventListener( "error", function( evt ) {
+      console.log( "load call error", evt );
+    } );
 
-    req.send(saveDetailsAsJSON);
-};
+    req.send( saveDetailsAsJSON );
+  };
 
-persistence.load = function () {
-    console.log("persistence.load");
+  persistence.load = function() {
+    console.log( "persistence.load" );
     var req = new XMLHttpRequest();
 
-    req.addEventListener("load", function (evt) {
-        console.log("load call completed", evt);
+    req.addEventListener( "load", function( evt ) {
+      console.log( "load call completed", evt );
 
-        preferenceStore = JSON.parse( evt.currentTarget.response).preferences;
-        cssEnactor.enact( preferenceStore, 'preview');
-    });
+      preferenceStore = JSON.parse( evt.currentTarget.response ).preferences;
+      cssEnactor.enact( preferenceStore, 'preview' );
+    } );
 
-    req.addEventListener("error", function (evt) {
-        console.log("load call error", evt);
-    });
+    req.addEventListener( "error", function( evt ) {
+      console.log( "load call error", evt );
+    } );
 
-    var filename = document.querySelector("#" + persistence.controlIds.filename).value;
+    var filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
     var loadDetails = {
-        filename: filename
+      filename: filename
     };
-    req.open("GET", "/preferences/" + filename);
+    req.open( "GET", "/preferences/" + filename );
 
-    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
 
-    req.send(JSON.stringify(loadDetails));
-};
+    req.send( JSON.stringify( loadDetails ) );
+  };
+
+} )();
