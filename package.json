@@ -1,0 +1,9 @@
+{
+  "name": "2018-a11y-options-framework",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.3",
+    "path": "^0.12.7",
+    "body-parser": "^1.18.3"
+  }
+}
