@@ -19,7 +19,7 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
     preferenceKeys.forEach(function (preferenceKey) {
         var preference = preferenceSchema.preferences[preferenceKey];
 
-        var controlElement = lexGenerator.getControl(preference.name, preference.type, preferenceSchema.class, preferenceKey);
+        var controlElement = lexGenerator.getControl(preference.name, preference.type, preference.control, preferenceSchema.class, preferenceKey);
 
         controlsGroup.appendChild(controlElement);
     });
@@ -27,14 +27,14 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
     lexGenerator.events(preferenceSchema);
 };
 
-lexGenerator.getControl = function (preferenceName, preferenceType, schemaKey, preferenceKey) {
+lexGenerator.getControl = function (preferenceName, preferenceType, preferenceControlConfig, schemaKey, preferenceKey) {
     var controlElement = document.createElement("div");
 
     var labelElement = document.createElement("label");
 
     labelElement.innerHTML = preferenceName;
 
-    var inputElement = lexGenerator.getInputElement[preferenceType](schemaKey, preferenceKey);
+    var inputElement = lexGenerator.getInputElement[preferenceType](schemaKey, preferenceKey, preferenceControlConfig);
 
     labelElement.appendChild(inputElement);
     controlElement.appendChild(labelElement);
@@ -44,7 +44,7 @@ lexGenerator.getControl = function (preferenceName, preferenceType, schemaKey, p
 
 lexGenerator.getInputElement = {};
 
-lexGenerator.getInputElement.numeric = function (schemaKey, preferenceKey) {
+lexGenerator.getInputElement.numeric = function (schemaKey, preferenceKey, preferenceControlConfig) {
     var inputElement = document.createElement("input");
 
     inputElement.classList.add(schemaKey);
@@ -52,6 +52,10 @@ lexGenerator.getInputElement.numeric = function (schemaKey, preferenceKey) {
     inputElement.classList.add(schemaKey + "-" + preferenceKey);
 
     inputElement.name = preferenceKey;
+    inputElement.type = "number";
+    inputElement.min = preferenceControlConfig.min;
+    inputElement.max = preferenceControlConfig.max;
+    inputElement.step = preferenceControlConfig.step;
 
     return inputElement;
 };
