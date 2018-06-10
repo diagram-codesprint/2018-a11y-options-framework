@@ -36,7 +36,7 @@ persistence.bindControls = function () {
 persistence.save = function () {
     console.log("persistence.save");
     var req = new XMLHttpRequest();
-    req.open("POST", "http://localhost:8080/preferences");
+    req.open("POST", "/preferences");
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     var filename = document.querySelector("#" + persistence.controlIds.filename).value;
@@ -68,6 +68,6 @@ persistence.load = function () {
     req.addEventListener("error", function (evt) {
         console.log("load call error", evt);
     });
-    req.open("GET", "http://localhost:8080/preferences");
+    req.open("GET", "/preferences");
     req.send();
 };

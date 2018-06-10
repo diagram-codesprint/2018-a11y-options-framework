@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.get('/', function(request, response) {
     console.log('Hello from Express!');
-    response.sendFile(path.join(__dirname + '/../index.html'));
+    response.sendFile(path.join(__dirname + '/index.html'));
 });
 
 
@@ -21,10 +21,19 @@ app.post( '/preferences', function( request, response){
     console.log( 'in post preferences');
     let preferencesJSON = request.body;
 
+    console.log( preferencesJSON);
+});
+
+app.get( '/preferences', function( request, response){
+
+    console.log( 'in get preferences');
+
 });
 
 
-app.use(express.static(__dirname));
+app.use( '/css', express.static('css/'));
+
+app.use( '/js', express.static('js/'));
 
 app.use(function(request, response){
     if( request.status === 404) {
