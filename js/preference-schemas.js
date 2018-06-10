@@ -77,7 +77,8 @@ preferenceSchema.font.preferences.fontFamily = {
         choices: [
             "Arial",
             "Comic Sans MS",
-            "Times New Roman"
+            "Times New Roman",
+            "Verdana"
         ]
     }
 };

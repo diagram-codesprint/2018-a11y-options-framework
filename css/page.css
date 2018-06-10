@@ -1,9 +1,16 @@
-#text-spacing div, #font div {
+.controls {
+    display: inline-block;
+}
+
+.controls div {
     margin: 0.5em;
     display: inline-block;
 }
 
-#text-spacing div input, #font div input{
+.controls input, .controls select {
     margin-left: 1em;
+}
+
+.controls input {
     width: 5em;
 }
