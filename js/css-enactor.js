@@ -107,3 +107,8 @@ cssEnactor.enact = function (preferenceStore, selectorSet) {
         });
     });
 };
+
+// TODO: split out function to enact a single preference at lines 90-106
+cssEnactor.enactPreference = function () {
+
+};

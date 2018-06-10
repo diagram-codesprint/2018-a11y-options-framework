@@ -2,8 +2,6 @@ var lexGenerator = {};
 
 lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
 
-    console.log("lexGenerator.controls");
-
     // parse the preference schema
     var preferenceKeys = Object.keys(preferenceSchema.preferences);
 
