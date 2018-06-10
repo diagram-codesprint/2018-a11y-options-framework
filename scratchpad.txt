@@ -1,0 +1,20 @@
+# Example Data Representation
+## Based on WCAG 2.1 1.4.12
+
+text-spacing
+  - line-height
+    - 0 # web default plus
+    - # step size    
+  - paragraph-spacing
+    - 0 # web default plus
+    - # step size
+  - letter-spacing
+    - 0 # web default plus
+    - # step size
+  - word-spacing
+    - 0 # web default plus
+    - # step size
+
+# Pass data representation to a function that renders an appropriate control
+
+# When the control is used, pass the change to an enactor function

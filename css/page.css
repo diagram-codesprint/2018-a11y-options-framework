@@ -1,0 +1,22 @@
+.controls {
+    display: inline-block;
+}
+
+.controls div {
+    margin: 0.5em;
+    display: inline-block;
+}
+
+.controls input, .controls select {
+    margin-left: 1em;
+}
+
+.controls input {
+    width: 5em;
+}
+
+#preview-area {
+    border: 1px solid black;
+    margin: 0.5rem 0 0.5rem 0;
+    padding: 0 0.5rem 0 0.5rem;
+}
