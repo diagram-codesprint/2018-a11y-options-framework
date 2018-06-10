@@ -3,14 +3,15 @@
         <link rel="stylesheet" href="css/page.css">
         <script src="js/text-spacing.js"></script>
         <script src="js/lex-generator.js"></script>
+        <script src="js/persistence.js"></script>
         <script src="js/preference-store.js"></script>
         <script src="js/css-enactor.js"></script>
     </head>
     <body>
-        <h1>Text Spacing</h1>
         <div id="text-spacing">
 
         </div>
+
         <div id="preview-area">
             <p>
                 Nunc congue dui in tellus imperdiet malesuada. Nullam aliquam ante fringilla, vestibulum urna ut, fringilla mauris. Vestibulum tempus sit amet eros interdum pharetra. Aenean a molestie magna. Quisque bibendum leo quam, vitae luctus lacus consequat sit amet. Maecenas dictum blandit venenatis. Etiam in mi urna. Curabitur eu ultrices tortor, non vulputate ante. Suspendisse cursus velit libero, lobortis lacinia metus eleifend sit amet. Duis fermentum ornare nunc ac tincidunt. In mi massa, vulputate vel vehicula nec, interdum in augue.
@@ -19,10 +20,15 @@
                 Nam eget nibh vestibulum, sollicitudin est non, interdum est. Donec iaculis magna sit amet est fermentum porta. Cras sollicitudin turpis vulputate elit tincidunt, at cursus lorem consectetur. Aenean at commodo tellus. Nunc eleifend lobortis rhoncus. Duis sollicitudin purus leo, nec elementum eros condimentum eu. Nunc non euismod nisl, eu posuere nisi. Praesent rutrum lobortis eros eget ullamcorper. Curabitur ac ex vel ipsum condimentum egestas eu id nulla. Duis vitae nisi quis sem mattis scelerisque posuere quis arcu.
             </p>
         </div>
+
+        <div id="persistence-controls">
+        </div>
+
         <script>
+            persistence.appendControlMarkup("#persistence-controls");
             lexGenerator.preferenceStoreInit(preferenceSchema.textSpacing);
             lexGenerator.controls(preferenceSchema.textSpacing, "#text-spacing");
-            cssEnactor.enact(preferenceStore, "preview");
+            cssEnactor.enact(preferenceStore, "page");
         </script>
     </body>
 </html>

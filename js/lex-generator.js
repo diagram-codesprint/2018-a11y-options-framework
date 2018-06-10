@@ -6,29 +6,58 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
 
     // parse the preference schema
     var preferenceKeys = Object.keys(preferenceSchema.preferences);
+
+    var controlsArea = document.querySelector(controlAreasQuerySelector);
+
+    var controlsGroup = document.createElement("fieldset");
+    var controlsGroupLegend = document.createElement("legend");
+    controlsGroupLegend.innerHTML = preferenceSchema.name;
+    controlsGroup.appendChild(controlsGroupLegend);
+
+    controlsArea.appendChild(controlsGroup);
+
     preferenceKeys.forEach(function (preferenceKey) {
         var preference = preferenceSchema.preferences[preferenceKey];
 
-        var controlsArea = document.querySelector(controlAreasQuerySelector);
+        var controlElement = lexGenerator.getControl(preference.name, preference.type, preference.control, preferenceSchema.class, preferenceKey);
 
-        var controlElement = document.createElement("div");
-
-        var labelElement = document.createElement("label");
-        labelElement.innerHTML = preference.name;
-
-        var inputElement = document.createElement("input");
-
-        inputElement.classList.add(preferenceSchema.class);
-
-        inputElement.name = preferenceKey;
-
-        labelElement.appendChild(inputElement);
-        controlElement.appendChild(labelElement);
-
-        controlsArea.appendChild(controlElement);
+        controlsGroup.appendChild(controlElement);
     });
 
     lexGenerator.events(preferenceSchema);
+};
+
+lexGenerator.getControl = function (preferenceName, preferenceType, preferenceControlConfig, schemaKey, preferenceKey) {
+    var controlElement = document.createElement("div");
+
+    var labelElement = document.createElement("label");
+
+    labelElement.innerHTML = preferenceName;
+
+    var inputElement = lexGenerator.getInputElement[preferenceType](schemaKey, preferenceKey, preferenceControlConfig);
+
+    labelElement.appendChild(inputElement);
+    controlElement.appendChild(labelElement);
+
+    return controlElement;
+};
+
+lexGenerator.getInputElement = {};
+
+lexGenerator.getInputElement.numeric = function (schemaKey, preferenceKey, preferenceControlConfig) {
+    var inputElement = document.createElement("input");
+
+    inputElement.classList.add(schemaKey);
+
+    inputElement.classList.add(schemaKey + "-" + preferenceKey);
+
+    inputElement.name = preferenceKey;
+    inputElement.type = "number";
+    inputElement.min = preferenceControlConfig.min;
+    inputElement.max = preferenceControlConfig.max;
+    inputElement.step = preferenceControlConfig.step;
+
+    return inputElement;
 };
 
 lexGenerator.events = function (preferenceSchema) {
@@ -41,7 +70,9 @@ lexGenerator.events = function (preferenceSchema) {
             // User feedback
             console.log("Preference change", name, value);
             preferenceStore[preferenceSchema.class][target.name].value = target.value;
-            // TODO: this is bad
+            // TODO: this does the entire CSS enactment again
+            // it would be more efficient to target based on
+            // the change
             cssEnactor.enact(preferenceStore, "preview");
             console.log(preferenceStore);
         };
@@ -49,6 +80,7 @@ lexGenerator.events = function (preferenceSchema) {
 };
 
 lexGenerator.preferenceStoreInit = function (preferenceSchema) {
+
     preferenceStore[preferenceSchema.class] = preferenceStore[preferenceSchema.class] ? preferenceStore[preferenceSchema.class] : {};
 
     var preferenceKeys = Object.keys(preferenceSchema.preferences);
@@ -56,7 +88,7 @@ lexGenerator.preferenceStoreInit = function (preferenceSchema) {
         var preference = preferenceSchema.preferences[preferenceKey];
         preferenceStore[preferenceSchema.class][preferenceKey] = {
             name: preference.name,
-            value: preference.value
+            value: preference.value ? preference.value : preference.defaultValue
         };
     });
     console.log(preferenceStore);
