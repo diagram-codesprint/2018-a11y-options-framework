@@ -2,7 +2,7 @@
 ( function() {
 
 
-  let persistence = {};
+  window.persistence = {};
 
   persistence.controlIds = {
     filename: "persistence-filename",
