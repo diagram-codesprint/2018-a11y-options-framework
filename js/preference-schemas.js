@@ -82,3 +82,24 @@ preferenceSchema.font.preferences.fontFamily = {
         ]
     }
 };
+
+preferenceSchema.colors = {
+    name: "Colors",
+    class: "colors",
+    preferences: {}
+};
+
+preferenceSchema.colors.preferences.contrast = {
+    name: "Contrast Theme",
+    defaultValue: "none",
+    type: "choice",
+    control: {
+        choices: [
+            "none",
+            "White on Black",
+            "Black on White",
+            "Yellow on Black",
+            "Black on Yellow",
+        ]
+    }
+};

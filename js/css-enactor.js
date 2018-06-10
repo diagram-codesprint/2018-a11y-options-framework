@@ -14,6 +14,37 @@ cssEnactor.transforms.toPixel = function (value) {
     return value + "px";
 };
 
+cssEnactor.transforms.contrastForeground = function (value) {
+    return cssEnactor.contrastThemes[value].foreground;
+};
+
+cssEnactor.transforms.contrastBackground = function (value) {
+    return cssEnactor.contrastThemes[value].background;
+};
+
+cssEnactor.contrastThemes = {
+    "none": {
+        "foreground": "initial",
+        "background": "initial"
+    },
+    "White on Black": {
+        "foreground": "#FFF",
+        "background": "#000"
+    },
+    "Black on White": {
+        "foreground": "#000",
+        "background": "#FFF",
+    },
+    "Yellow on Black": {
+        "foreground": "#FF0",
+        "background": "#000"
+    },
+    "Black on Yellow": {
+        "foreground": "#000",
+        "background": "#FF0"
+    }
+};
+
 cssEnactor.enactmentMap = {};
 
 cssEnactor.enactmentMap.textSpacing = {
@@ -83,6 +114,23 @@ cssEnactor.enactmentMap.font = {
         properties: {
             "font-family": {
                 transform: cssEnactor.transforms.rawValue
+            }
+        }
+    }
+};
+
+cssEnactor.enactmentMap.colors = {
+    contrast: {
+        selectorSets: {
+            "page": ["body"],
+            "preview": ["#preview-area"]
+        },
+        properties: {
+            "color": {
+                transform: cssEnactor.transforms.contrastForeground
+            },
+            "background-color": {
+                transform: cssEnactor.transforms.contrastBackground
             }
         }
     }
