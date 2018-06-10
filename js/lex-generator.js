@@ -9,17 +9,19 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
 
     var controlsArea = document.querySelector(controlAreasQuerySelector);
 
-    var controlsHeading = document.createElement("h1");
-    controlsHeading.innerHTML = preferenceSchema.name;
+    var controlsGroup = document.createElement("fieldset");
+    var controlsGroupLegend = document.createElement("legend");
+    controlsGroupLegend.innerHTML = preferenceSchema.name;
+    controlsGroup.appendChild(controlsGroupLegend);
 
-    controlsArea.appendChild(controlsHeading);
+    controlsArea.appendChild(controlsGroup);
 
     preferenceKeys.forEach(function (preferenceKey) {
         var preference = preferenceSchema.preferences[preferenceKey];
 
         var controlElement = lexGenerator.getControl(preference.name, preferenceSchema.class, preferenceKey);
 
-        controlsArea.appendChild(controlElement);
+        controlsGroup.appendChild(controlElement);
     });
 
     lexGenerator.events(preferenceSchema);
@@ -32,6 +34,15 @@ lexGenerator.getControl = function (preferenceName, schemaKey, preferenceKey) {
 
     labelElement.innerHTML = preferenceName;
 
+    var inputElement = lexGenerator.getInputElement(schemaKey, preferenceKey);
+
+    labelElement.appendChild(inputElement);
+    controlElement.appendChild(labelElement);
+
+    return controlElement;
+};
+
+lexGenerator.getInputElement = function (schemaKey, preferenceKey) {
     var inputElement = document.createElement("input");
 
     inputElement.classList.add(schemaKey);
@@ -40,10 +51,7 @@ lexGenerator.getControl = function (preferenceName, schemaKey, preferenceKey) {
 
     inputElement.name = preferenceKey;
 
-    labelElement.appendChild(inputElement);
-    controlElement.appendChild(labelElement);
-
-    return controlElement;
+    return inputElement;
 };
 
 lexGenerator.events = function (preferenceSchema) {
