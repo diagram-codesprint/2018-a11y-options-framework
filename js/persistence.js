@@ -1,4 +1,3 @@
-
 ( function() {
 
 
@@ -37,59 +36,92 @@
     loadButton.onclick = persistence.load;
   };
 
+  // {boolean} we are running in the chrome extension, so provide different safe load logic
+  let inChromeExtension = window.location.search.indexOf( 'extension' ) >= 0;
+
   persistence.save = function() {
     console.log( "persistence.save" );
-    let req = new XMLHttpRequest();
-    req.open( "POST", "/preferences" );
-    req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
 
     let filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
-    let saveDetails = {
-      filename: filename,
-      preferences: preferenceStore
-    };
 
-    let saveDetailsAsJSON = JSON.stringify( saveDetails );
+    if ( !inChromeExtension ) {
+      let req = new XMLHttpRequest();
+      req.open( "POST", "/preferences" );
+      req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
 
-    console.log( "saveDetails as JSON", saveDetailsAsJSON );
 
-    req.addEventListener( "load", function( evt ) {
-      console.log( "save call completed", evt );
-    } );
+      let saveDetails = {
+        filename: filename,
+        preferences: preferenceStore
+      };
 
-    req.addEventListener( "error", function( evt ) {
-      console.log( "load call error", evt );
-    } );
+      let saveDetailsAsJSON = JSON.stringify( saveDetails );
 
-    req.send( saveDetailsAsJSON );
+      console.log( "saveDetails as JSON", saveDetailsAsJSON );
+
+      req.addEventListener( "load", function( evt ) {
+        console.log( "save call completed", evt );
+      } );
+
+      req.addEventListener( "error", function( evt ) {
+        console.log( "load call error", evt );
+      } );
+
+      req.send( saveDetailsAsJSON );
+    }
+    else {
+      console.log( 'in extension save' );
+
+
+      let saveDetails = {};
+      saveDetails[ filename ] = preferenceStore;
+      chrome.storage.sync.set( saveDetails );
+    }
   };
 
   persistence.load = function() {
     console.log( "persistence.load" );
-    let req = new XMLHttpRequest();
-
-    req.addEventListener( "load", function( evt ) {
-      console.log( "load call completed", evt );
-
-      preferenceStore = JSON.parse( evt.currentTarget.response ).preferences;
-      cssEnactor.enact( preferenceStore, 'preview' );
-    } );
-
-    req.addEventListener( "error", function( evt ) {
-      console.log( "load call error", evt );
-    } );
 
     let filename = document.querySelector( "#" + persistence.controlIds.filename ).value;
 
-    let loadDetails = {
-      filename: filename
-    };
-    req.open( "GET", "/preferences/" + filename );
 
-    req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
+    if ( !inChromeExtension ) {
+      let req = new XMLHttpRequest();
 
-    req.send( JSON.stringify( loadDetails ) );
+      let loadDetails = {
+        filename: filename
+      };
+
+      req.addEventListener( "load", function( evt ) {
+        console.log( "load call completed", evt );
+
+        preferenceStore = JSON.parse( evt.currentTarget.response ).preferences;
+        cssEnactor.enact( preferenceStore, 'preview' );
+      } );
+
+      req.addEventListener( "error", function( evt ) {
+        console.log( "load call error", evt );
+      } );
+
+      req.open( "GET", "/preferences/" + filename );
+
+      req.setRequestHeader( "Content-Type", "application/json;charset=UTF-8" );
+
+      req.send( JSON.stringify( loadDetails ) );
+
+    }
+    else {
+
+      console.log( 'in extension load' );
+
+      console.log( filename);
+      chrome.storage.sync.get([ filename], function( data ) {
+        preferenceStore = data[filename];
+        cssEnactor.enact( preferenceStore, 'preview' ); // TODO: copied from the load event above
+
+      } );
+    }
   };
 
 } )();

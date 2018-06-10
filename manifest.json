@@ -1,0 +1,10 @@
+{
+  "name": "Options Framework: Light!",
+  "version": "1.0",
+  "description": "lightweight framework without libraries",
+  "manifest_version": 2,
+  "options_page": "index.html?extension",
+  "permissions": [
+    "storage"
+  ]
+}
