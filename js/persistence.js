@@ -74,7 +74,9 @@
       console.log( 'in extension save' );
 
 
-      let saveDetails = {};
+      let saveDetails = {
+        primaryUser: filename
+      };
       saveDetails[ filename ] = preferenceStore;
       chrome.storage.sync.set( saveDetails );
     }
@@ -115,11 +117,18 @@
 
       console.log( 'in extension load' );
 
-      console.log( filename);
-      chrome.storage.sync.get([ filename], function( data ) {
-        preferenceStore = data[filename];
+      console.log( filename );
+      chrome.storage.sync.get( [ filename ], function( data ) {
+        preferenceStore = data[ filename ];
+
         cssEnactor.enact( preferenceStore, 'preview' ); // TODO: copied from the load event above
 
+
+        // Set the primaryUser again
+        let saveDetails = {
+          primaryUser: filename
+        };
+        chrome.storage.sync.set( saveDetails );
       } );
     }
   };

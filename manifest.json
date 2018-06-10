@@ -5,6 +5,22 @@
   "manifest_version": 2,
   "options_page": "index.html?extension",
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "tabs",
+    "webNavigation"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "js/css-enactor.js",
+        "js/chrome_extension/contentScript.js"
+      ],
+      "all_frames": true
+    }
   ]
 }
