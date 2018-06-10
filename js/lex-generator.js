@@ -40,9 +40,9 @@ lexGenerator.events = function (preferenceSchema) {
                 value = target.value;
             // User feedback
             console.log("Preference change", name, value);
-            preferenceStore[preferenceSchema.class][target.name].value = target.value
-            // TODO: this is bad 
-            cssEnactor.enact(preferenceStore);
+            preferenceStore[preferenceSchema.class][target.name].value = target.value;
+            // TODO: this is bad
+            cssEnactor.enact(preferenceStore, "preview");
             console.log(preferenceStore);
         };
     }

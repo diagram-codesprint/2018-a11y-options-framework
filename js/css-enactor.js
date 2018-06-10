@@ -1,17 +1,23 @@
 var cssEnactor = {};
 
 cssEnactor.transforms = {};
+
 cssEnactor.transforms.rawValue = function (value) {
     return value;
+};
+
+cssEnactor.transforms.toRem = function (value) {
+    return value + "rem";
 };
 
 cssEnactor.enactmentMap = {};
 
 cssEnactor.enactmentMap.textSpacing = {
         lineHeight: {
-            selectors: [
-                "body"
-            ],
+            selectorSets: {
+                "page": ["body"],
+                "preview": ["#preview-area"]
+            },
             properties: {
                 "line-height": {
                     transform: cssEnactor.transforms.rawValue
@@ -19,17 +25,41 @@ cssEnactor.enactmentMap.textSpacing = {
             }
         },
         paragraphSpacing: {
-
+            selectorSets: {
+                "page": ["p"],
+                "preview": ["#preview-area p"]
+            },
+            properties: {
+                "margin-bottom": {
+                    transform: cssEnactor.transforms.toRem
+                }
+            }
         },
         letterSpacing: {
-
+            selectorSets: {
+                "page": ["body"],
+                "preview": ["#preview-area"]
+            },
+            properties: {
+                "letter-spacing": {
+                    transform: cssEnactor.transforms.rawValue
+                }
+            }
         },
         wordSpacing: {
-
+            selectorSets: {
+                "page": ["body"],
+                "preview": ["#preview-area"]
+            },
+            properties: {
+                "word-spacing": {
+                    transform: cssEnactor.transforms.rawValue
+                }
+            }
         }
 };
 
-cssEnactor.enact = function (preferenceStore) {
+cssEnactor.enact = function (preferenceStore, selectorSet) {
     var preferenceTypes = Object.keys(preferenceStore);
     preferenceTypes.forEach(function (preferenceType) {
 
@@ -42,8 +72,8 @@ cssEnactor.enact = function (preferenceStore) {
             var preferenceSetting = preferenceSettings[enactorKey];
             var value = preferenceSetting.value;
             var enactor = preferenceEnactors[enactorKey];
-            if(enactor.selectors && enactor.properties) {
-                var selectors = enactor.selectors;
+            if(enactor.selectorSets && enactor.properties) {
+                var selectors = enactor.selectorSets[selectorSet];
                 var properties = Object.keys(enactor.properties);
                 selectors.forEach(function (selector) {
                     var matched = document.querySelectorAll(selector);

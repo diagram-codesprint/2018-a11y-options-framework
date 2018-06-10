@@ -9,17 +9,17 @@ preferenceSchema.textSpacing = {
 
 preferenceSchema.textSpacing.preferences.lineHeight = {
     name: "Line Height",
-    value: 1
+    value: "normal"
 };
 
 preferenceSchema.textSpacing.preferences.paragraphSpacing = {
     name: "Paragraph Spacing",
-    value: 0
+    value: 1
 };
 
 preferenceSchema.textSpacing.preferences.letterSpacing = {
     name: "Letter Spacing",
-    value: 0
+    value: "normal"
 };
 
 preferenceSchema.textSpacing.preferences.wordSpacing = {
