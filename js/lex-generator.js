@@ -6,12 +6,19 @@ lexGenerator.controls = function(preferenceSchema, controlAreasQuerySelector) {
 
     // parse the preference schema
     var preferenceKeys = Object.keys(preferenceSchema.preferences);
+
+    var controlsArea = document.querySelector(controlAreasQuerySelector);
+
+    var controlsHeading = document.createElement("h1");
+    controlsHeading.innerHTML = preferenceSchema.name;
+
+    controlsArea.appendChild(controlsHeading);
+
     preferenceKeys.forEach(function (preferenceKey) {
         var preference = preferenceSchema.preferences[preferenceKey];
 
-        var controlsArea = document.querySelector(controlAreasQuerySelector);
-
         var controlElement = lexGenerator.getControl(preference.name, preferenceSchema.class, preferenceKey);
+
         controlsArea.appendChild(controlElement);
     });
 
@@ -59,6 +66,7 @@ lexGenerator.events = function (preferenceSchema) {
 };
 
 lexGenerator.preferenceStoreInit = function (preferenceSchema) {
+
     preferenceStore[preferenceSchema.class] = preferenceStore[preferenceSchema.class] ? preferenceStore[preferenceSchema.class] : {};
 
     var preferenceKeys = Object.keys(preferenceSchema.preferences);
@@ -66,7 +74,7 @@ lexGenerator.preferenceStoreInit = function (preferenceSchema) {
         var preference = preferenceSchema.preferences[preferenceKey];
         preferenceStore[preferenceSchema.class][preferenceKey] = {
             name: preference.name,
-            value: preference.value
+            value: preference.value ? preference.value : preference.defaultValue
         };
     });
     console.log(preferenceStore);

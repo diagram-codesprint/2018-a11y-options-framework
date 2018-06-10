@@ -9,20 +9,20 @@ preferenceSchema.textSpacing = {
 
 preferenceSchema.textSpacing.preferences.lineHeight = {
     name: "Line Height",
-    value: "initial"
+    defaultValue: "initial"
 };
 
 preferenceSchema.textSpacing.preferences.paragraphSpacing = {
     name: "Paragraph Spacing",
-    value: "initial"
+    defaultValue: "initial"
 };
 
 preferenceSchema.textSpacing.preferences.letterSpacing = {
     name: "Letter Spacing",
-    value: "initial"
+    defaultValue: "initial"
 };
 
 preferenceSchema.textSpacing.preferences.wordSpacing = {
     name: "Word Spacing",
-    value: "initial"
+    defaultValue: "initial"
 };
