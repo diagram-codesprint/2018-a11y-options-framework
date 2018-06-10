@@ -68,3 +68,38 @@ preferenceSchema.font.preferences.fontSize = {
         step: 1
     }
 };
+
+preferenceSchema.font.preferences.fontFamily = {
+    name: "Font Family",
+    defaultValue: "initial",
+    type: "choice",
+    control: {
+        choices: [
+            "Arial",
+            "Comic Sans MS",
+            "Times New Roman",
+            "Verdana"
+        ]
+    }
+};
+
+preferenceSchema.colors = {
+    name: "Colors",
+    class: "colors",
+    preferences: {}
+};
+
+preferenceSchema.colors.preferences.contrast = {
+    name: "Contrast Theme",
+    defaultValue: "none",
+    type: "choice",
+    control: {
+        choices: [
+            "none",
+            "White on Black",
+            "Black on White",
+            "Yellow on Black",
+            "Black on Yellow",
+        ]
+    }
+};
