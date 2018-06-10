@@ -74,6 +74,17 @@ cssEnactor.enactmentMap.font = {
                 transform: cssEnactor.transforms.toPixel
             }
         }
+    },
+    fontFamily: {
+        selectorSets: {
+            "page": ["body"],
+            "preview": ["#preview-area"]
+        },
+        properties: {
+            "font-family": {
+                transform: cssEnactor.transforms.rawValue
+            }
+        }
     }
 };
 

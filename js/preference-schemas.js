@@ -68,3 +68,16 @@ preferenceSchema.font.preferences.fontSize = {
         step: 1
     }
 };
+
+preferenceSchema.font.preferences.fontFamily = {
+    name: "Font Family",
+    defaultValue: "initial",
+    type: "choice",
+    control: {
+        choices: [
+            "Arial",
+            "Comic Sans MS",
+            "Times New Roman"
+        ]
+    }
+};

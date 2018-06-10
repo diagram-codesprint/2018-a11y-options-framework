@@ -1,9 +1,9 @@
-#text-spacing div {
+#text-spacing div, #font div {
     margin: 0.5em;
     display: inline-block;
 }
 
-#text-spacing div input {
+#text-spacing div input, #font div input{
     margin-left: 1em;
     width: 5em;
 }

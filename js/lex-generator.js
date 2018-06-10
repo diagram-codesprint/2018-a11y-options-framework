@@ -58,6 +58,26 @@ lexGenerator.getInputElement.numeric = function (schemaKey, preferenceKey, prefe
     return inputElement;
 };
 
+lexGenerator.getInputElement.choice = function (schemaKey, preferenceKey, preferenceControlConfig) {
+    var selectElement = document.createElement("select");
+
+    selectElement.classList.add(schemaKey);
+
+    selectElement.classList.add(schemaKey + "-" + preferenceKey);
+
+    selectElement.name = preferenceKey;
+
+    preferenceControlConfig.choices.forEach(function (choice) {
+        var optionElement = document.createElement("option");
+        optionElement.innerHTML = choice;
+        optionElement.value = choice;
+        selectElement.appendChild(optionElement);
+    });
+
+    return selectElement;
+
+};
+
 lexGenerator.events = function (preferenceSchema) {
     var inputElements = document.querySelectorAll("." + preferenceSchema.class);
     for(var i=0; i < inputElements.length; i++) {
